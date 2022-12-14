@@ -23,7 +23,11 @@ function App() {
           } />
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/roombook' element={<RoomBook />} />
+          <Route path='/roombook' element={
+            <RequireAuth>
+              <RoomBook />
+            </RequireAuth>
+          } />
         </Routes>
       </AuthProvider>
     </div>

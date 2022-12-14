@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons"
 // import useFirebase from '../hooks/useFirebase'
@@ -7,6 +7,15 @@ import useAuth from '../hooks/useAuth'
 
 const Login = () => {
     const { handleGoogleSignIn } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const googleSignIn = () => [
+        handleGoogleSignIn()
+            .then(result => {
+                navigate(location.state?.from || '/')
+            })
+    ]
 
     return (
         <div className='h-screen'>
@@ -41,7 +50,7 @@ const Login = () => {
                             <p className="text-center font-semibold mx-4 mb-0">OR</p>
                         </div>
 
-                        <button onClick={handleGoogleSignIn} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3"
+                        <button onClick={googleSignIn} className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3"
                             style={{ backgroundColor: '#3b5998' }}>
                             <FontAwesomeIcon icon={faGoogle} className='mr-2' /> Continue with Google
                         </button>
