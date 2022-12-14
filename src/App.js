@@ -7,6 +7,7 @@ import Rooms from './pages/Rooms'
 import RoomBook from './pages/RoomBook';
 import AuthProvider from './context/AuthProvider';
 import RequireAuth from './PrivateRoute/RequireAuth';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           } />
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/roombook' element={
             <RequireAuth>
               <RoomBook />
