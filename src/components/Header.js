@@ -10,10 +10,9 @@ const Header = () => {
             <Link to='/'>Home</Link>
             <Link to='/rooms'>Rooms</Link>
             <Link to='/book'>My Book</Link>
-            {/* {user.email && <span>{user.displayName}</span>} */}
             {
                 user.email ?
-                    <button onClick={handleSignOut}>Logout</button>
+                    <button onClick={handleSignOut} className="text-red-500">Logout</button>
                     :
                     <Link to='/login'>Login</Link>
             }

@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Rooms from './pages/Rooms'
 import RoomBook from './pages/RoomBook';
-import './App.css';
 import AuthProvider from './context/AuthProvider';
 import RequireAuth from './PrivateRoute/RequireAuth';
 
