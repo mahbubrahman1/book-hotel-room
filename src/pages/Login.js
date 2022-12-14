@@ -2,10 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons"
-import useFirebase from '../hooks/useFirebase'
+// import useFirebase from '../hooks/useFirebase'
+import useAuth from '../hooks/useAuth'
 
 const Login = () => {
-    const { handleGoogleSignIn } = useFirebase();
+    const { handleGoogleSignIn } = useAuth();
 
     return (
         <div className='h-screen'>

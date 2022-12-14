@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import useFirebase from '../hooks/useFirebase'
+import useAuth from '../hooks/useAuth';
 
 const Header = () => {
-    const { user, handleSignOut } = useFirebase();
+    const { user, handleSignOut } = useAuth();
 
     return (
         <nav className='flex flex-row justify-center space-x-6 text-xl'>
