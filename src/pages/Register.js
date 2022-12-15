@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
@@ -13,6 +13,9 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const nameFieldHandler = e => {
         setName(e.target.value);
@@ -53,6 +56,11 @@ const Register = () => {
                 // set name 
                 updateProfile(auth.currentUser, { displayName: name })
                     .then(result => { })
+
+                // redirect user login page
+                if (user) {
+                    navigate('/')
+                }
             })
             .catch(error => {
                 setError(error.message)

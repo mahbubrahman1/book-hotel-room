@@ -39,12 +39,12 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                setError('');
 
                 // redirect user login page or existing page 
                 if (user) {
                     navigate(location.state?.from || '/')
                 }
-                setError('');
             })
             .catch(error => {
                 setError(error.message)
