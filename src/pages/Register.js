@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
@@ -8,7 +8,7 @@ import app from '../firebase'
 const Register = () => {
     const auth = getAuth(app)
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
