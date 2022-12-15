@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons"
+import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import useAuth from '../hooks/useAuth'
 import app from '../firebase'
 
@@ -51,8 +51,6 @@ const Login = () => {
             })
     }
 
-
-
     return (
         <div className='h-screen'>
             <div className='px-6 py-12 h-full'>
@@ -95,16 +93,6 @@ const Login = () => {
                             style={{ backgroundColor: '#3b5998' }}>
                             <FontAwesomeIcon icon={faGoogle} className='mr-2' /> Continue with Google
                         </button>
-                        <Link
-                            className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center"
-                            style={{ backgroundColor: '#55acee' }}
-                            to="#!"
-                            role="button"
-                            data-mdb-ripple="true"
-                            data-mdb-ripple-color="light">
-                            <FontAwesomeIcon icon={faFacebook} className='mr-2' /> Continue with Facebook
-                        </Link>
-                        {/* </form> */}
 
                     </div>
                 </div>

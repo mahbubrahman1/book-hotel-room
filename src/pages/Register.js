@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons"
 import { Link } from 'react-router-dom'
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import app from '../firebase'
 
 const Register = () => {
     const auth = getAuth(app)
+
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+
+    const nameFieldHandler = e => {
+        setName(e.target.value);
+    }
 
     const emailFieldHandler = e => {
         setEmail(e.target.value);
@@ -19,19 +26,33 @@ const Register = () => {
         setPassword(e.target.value);
     }
 
+    const confirmPasswordFieldHandler = e => {
+        setConfirmPassword(e.target.value);
+    }
+
     const formHandler = e => {
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError("Two password didn't match! Try again.")
+            return;
+        }
 
         if (password.length < 6) {
             setError('Password must be at least 6 characters.')
             return;
         }
 
+        // create user 
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
                 setError('');
+
+                // set name 
+                updateProfile(auth.currentUser, { displayName: name })
+                    .then(result => { })
             })
             .catch(error => {
                 setError(error.message)
@@ -47,10 +68,11 @@ const Register = () => {
 
                         <form onSubmit={formHandler}>
                             <div className="mb-6">
-                                <input
+                                <input onBlur={nameFieldHandler}
                                     type="text"
                                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     placeholder="Name"
+                                    required
                                 /></div>
 
                             <div className="mb-6">
@@ -58,6 +80,7 @@ const Register = () => {
                                     type="email"
                                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     placeholder="Email address"
+                                    required
                                 /></div>
 
                             <div className="mb-6">
@@ -65,8 +88,21 @@ const Register = () => {
                                     type="password"
                                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     placeholder="Password"
+                                    required
                                 />
                             </div>
+
+                            <div className="mb-6">
+                                <input onBlur={confirmPasswordFieldHandler}
+                                    type="password"
+                                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Confirm Password"
+                                    required
+                                />
+                            </div>
+
+                            {/* show validation text */}
+                            <p className='text-red-500 mb-2'>{error}</p>
 
                             <button
                                 type="submit"
@@ -87,16 +123,6 @@ const Register = () => {
                             style={{ backgroundColor: '#3b5998' }}>
                             <FontAwesomeIcon icon={faGoogle} className='mr-2' /> Continue with Google
                         </button>
-                        <Link
-                            className="px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center"
-                            style={{ backgroundColor: '#55acee' }}
-                            to="#!"
-                            role="button"
-                            data-mdb-ripple="true"
-                            data-mdb-ripple-color="light">
-                            <FontAwesomeIcon icon={faFacebook} className='mr-2' /> Continue with Facebook
-                        </Link>
-                        {/* </form> */}
 
                     </div>
                 </div>
