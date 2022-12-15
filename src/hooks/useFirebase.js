@@ -10,6 +10,8 @@ import app from '../firebase'
 
 const useFirebase = () => {
     const [user, setUser] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
     const auth = getAuth(app)
     const googleProvider = new GoogleAuthProvider();
 
@@ -19,12 +21,15 @@ const useFirebase = () => {
     }
 
     // signout or logout 
-    const handleSignOut = () => [
+    const handleSignOut = () => {
+        setIsLoading(true)
+
         signOut(auth)
             .then(() => {
                 setUser({})
+                    .finally(() => setIsLoading(false));
             })
-    ]
+    }
 
     // show user or change user
     useEffect(() => {
@@ -32,10 +37,11 @@ const useFirebase = () => {
             if (user) {
                 setUser(user)
             }
+            setIsLoading(false)
         })
     }, [])
 
-    return { user, handleGoogleSignIn, handleSignOut }
+    return { user, handleGoogleSignIn, handleSignOut, isLoading }
 }
 
 export default useFirebase;

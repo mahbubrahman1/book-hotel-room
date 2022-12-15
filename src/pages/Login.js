@@ -13,16 +13,20 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const googleSignIn = () => [
+    const googleSignIn = () => {
+        setIsLoading(false)
+
         handleGoogleSignIn()
             .then(result => {
                 navigate(location.state?.from || '/')
             })
-    ]
+            .finally(() => setIsLoading(false));
+    }
 
     const emailFieldHandler = e => {
         setEmail(e.target.value);
